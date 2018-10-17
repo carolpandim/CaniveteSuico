@@ -7,10 +7,14 @@ import android.widget.TextView
 import android.widget.Toast
 import br.com.fiap.carolpandim.canivetesuico.R
 
+enum class CustomToastType {
+    INFO, SUCCESS, ERROR, WARNING
+}
+
 class CustomToast(val context: Context, val inflater: LayoutInflater) {
 
-    fun showToast(text: String) {
-        val customToastroot = inflater.inflate(R.layout.custom_toast, null)
+    fun showToast(text: String, type: CustomToastType) {
+        val customToastroot = inflater.inflate(getLayout(type), null)
         val customtoast = Toast(context)
 
         val textView = customToastroot.findViewById<TextView>(R.id.textView1)
@@ -22,5 +26,15 @@ class CustomToast(val context: Context, val inflater: LayoutInflater) {
 
         customtoast.show()
     }
+
+    private fun getLayout(type: CustomToastType): Int {
+        return when (type) {
+            CustomToastType.INFO -> R.layout.custom_toast_info
+            CustomToastType.SUCCESS -> R.layout.custom_toast
+            CustomToastType.ERROR -> R.layout.custom_toast
+            CustomToastType.WARNING -> R.layout.custom_toast
+        }
+    }
+
 
 }
